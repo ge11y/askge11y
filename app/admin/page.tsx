@@ -247,10 +247,10 @@ export default function AdminPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Admin password"
-              className="w-full bg-zinc-800 text-white rounded-xl px-4 py-3 text-sm outline-none border border-zinc-700 focus:border-orange-500 transition-colors placeholder:text-zinc-500"
+              className="w-full bg-zinc-800 text-white rounded-xl px-4 py-3 text-sm outline-none border border-zinc-700 focus:border-purple-600 transition-colors placeholder:text-zinc-500"
             />
             {authError && <p className="text-red-400 text-xs">{authError}</p>}
-            <button type="submit" className="w-full bg-orange-500 hover:bg-orange-400 text-white py-3 rounded-xl text-sm font-medium transition-colors">
+            <button type="submit" className="w-full bg-purple-600 hover:bg-purple-500 text-white py-3 rounded-xl text-sm font-medium transition-colors">
               Enter
             </button>
           </form>
@@ -264,7 +264,7 @@ export default function AdminPage() {
       <div className="max-w-2xl mx-auto p-6">
         {/* Header */}
         <div className="flex items-center gap-3 mb-6">
-          <div className="w-9 h-9 rounded-full bg-orange-500 flex items-center justify-center text-white text-sm font-bold">G</div>
+          <div className="w-9 h-9 rounded-full bg-purple-600 flex items-center justify-center text-white text-sm font-bold">G</div>
           <div>
             <div className="text-white font-semibold">Ask Gelly — Admin</div>
             <div className="text-zinc-500 text-xs">Manage the knowledge base</div>
@@ -278,7 +278,7 @@ export default function AdminPage() {
               key={t}
               onClick={() => setTab(t)}
               className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors ${
-                tab === t ? 'bg-orange-500 text-white' : 'text-zinc-400 hover:text-white'
+                tab === t ? 'bg-purple-600 text-white' : 'text-zinc-400 hover:text-white'
               }`}
             >
               {t === 'add' ? 'Paste Text' : t === 'upload' ? 'Upload Audio' : `Review${chunks.length > 0 && tab !== 'review' ? ` (${chunks.length})` : ''}`}
@@ -310,7 +310,7 @@ export default function AdminPage() {
               <label className="text-zinc-400 text-xs mb-1 block">Source Name (optional)</label>
               <input value={sourceName} onChange={(e) => setSourceName(e.target.value)}
                 placeholder="e.g. objection-handling-notes.txt"
-                className="w-full bg-zinc-800 text-white rounded-lg px-3 py-2 text-sm border border-zinc-700 outline-none focus:border-orange-500 transition-colors placeholder:text-zinc-600" />
+                className="w-full bg-zinc-800 text-white rounded-lg px-3 py-2 text-sm border border-zinc-700 outline-none focus:border-purple-600 transition-colors placeholder:text-zinc-600" />
             </div>
 
             <div>
@@ -318,13 +318,13 @@ export default function AdminPage() {
               <textarea value={content} onChange={(e) => setContent(e.target.value)}
                 placeholder="Paste scripts, notes, transcripts..."
                 rows={14}
-                className="w-full bg-zinc-800 text-white rounded-lg px-3 py-2 text-sm border border-zinc-700 outline-none focus:border-orange-500 transition-colors placeholder:text-zinc-600 resize-none font-mono" />
+                className="w-full bg-zinc-800 text-white rounded-lg px-3 py-2 text-sm border border-zinc-700 outline-none focus:border-purple-600 transition-colors placeholder:text-zinc-600 resize-none font-mono" />
               <div className="text-zinc-600 text-xs mt-1">{content.split(/\s+/).filter(Boolean).length} words</div>
             </div>
 
             <div className="flex items-center gap-2">
               <input id="approve" type="checkbox" checked={autoApprove}
-                onChange={(e) => setAutoApprove(e.target.checked)} className="accent-orange-500" />
+                onChange={(e) => setAutoApprove(e.target.checked)} className="accent-purple-600" />
               <label htmlFor="approve" className="text-zinc-400 text-sm">
                 Auto-approve — make searchable immediately
                 {!autoApprove && <span className="text-zinc-600"> (will go to Review queue)</span>}
@@ -332,7 +332,7 @@ export default function AdminPage() {
             </div>
 
             <button type="submit" disabled={!content.trim() || addLoading}
-              className="w-full bg-orange-500 hover:bg-orange-400 disabled:opacity-40 disabled:cursor-not-allowed text-white py-3 rounded-xl text-sm font-medium transition-colors">
+              className="w-full bg-purple-600 hover:bg-purple-500 disabled:opacity-40 disabled:cursor-not-allowed text-white py-3 rounded-xl text-sm font-medium transition-colors">
               {addLoading ? 'Adding...' : 'Add to Knowledge Base'}
             </button>
 
@@ -345,9 +345,9 @@ export default function AdminPage() {
             <div className="p-4 bg-zinc-900 rounded-xl border border-zinc-800">
               <div className="text-zinc-400 text-xs font-medium mb-2">WHAT TO ADD FIRST</div>
               <ul className="text-zinc-500 text-xs space-y-1.5">
-                <li className="flex gap-2"><span className="text-orange-500">1.</span>Your written scripts and objection handlers — pure Gelly, auto-approve these</li>
-                <li className="flex gap-2"><span className="text-orange-500">2.</span>Your known sales recordings — transcribe and auto-approve</li>
-                <li className="flex gap-2"><span className="text-orange-500">3.</span>Mixed recordings — leave auto-approve OFF, review each chunk before it goes live</li>
+                <li className="flex gap-2"><span className="text-purple-600">1.</span>Your written scripts and objection handlers — pure Gelly, auto-approve these</li>
+                <li className="flex gap-2"><span className="text-purple-600">2.</span>Your known sales recordings — transcribe and auto-approve</li>
+                <li className="flex gap-2"><span className="text-purple-600">3.</span>Mixed recordings — leave auto-approve OFF, review each chunk before it goes live</li>
               </ul>
             </div>
           </form>
@@ -364,7 +364,7 @@ export default function AdminPage() {
             <div>
               <label className="text-zinc-400 text-xs mb-1 block">Audio File</label>
               <label className={`flex flex-col items-center justify-center w-full h-28 rounded-xl border-2 border-dashed cursor-pointer transition-colors ${
-                uploadFile ? 'border-orange-500 bg-orange-500/5' : 'border-zinc-700 bg-zinc-900 hover:border-zinc-500'
+                uploadFile ? 'border-purple-600 bg-purple-600/5' : 'border-zinc-700 bg-zinc-900 hover:border-zinc-500'
               }`}>
                 <input
                   type="file"
@@ -417,7 +417,7 @@ export default function AdminPage() {
                     value={transcript}
                     onChange={(e) => setTranscript(e.target.value)}
                     rows={8}
-                    className="w-full bg-zinc-800 text-white rounded-lg px-3 py-2 text-sm border border-zinc-700 outline-none focus:border-orange-500 transition-colors resize-none font-mono"
+                    className="w-full bg-zinc-800 text-white rounded-lg px-3 py-2 text-sm border border-zinc-700 outline-none focus:border-purple-600 transition-colors resize-none font-mono"
                   />
                   <div className="text-zinc-600 text-xs mt-1">{transcript.split(/\s+/).filter(Boolean).length} words — includes both you and the customer</div>
                 </div>
@@ -450,7 +450,7 @@ export default function AdminPage() {
                         <div className="text-zinc-400 text-xs font-medium mb-2">PHRASES & BUZZWORDS EXTRACTED</div>
                         <div className="flex flex-wrap gap-2">
                           {analysis.buzzwords.map((w: string, i: number) => (
-                            <span key={i} className="px-2 py-1 bg-orange-500/15 text-orange-400 rounded text-xs">{w}</span>
+                            <span key={i} className="px-2 py-1 bg-purple-600/15 text-purple-500 rounded text-xs">{w}</span>
                           ))}
                         </div>
                       </div>
@@ -463,7 +463,7 @@ export default function AdminPage() {
                         <ul className="space-y-1">
                           {analysis.patterns.map((p: string, i: number) => (
                             <li key={i} className="text-zinc-400 text-xs flex gap-2">
-                              <span className="text-orange-500 shrink-0">—</span>{p}
+                              <span className="text-purple-600 shrink-0">—</span>{p}
                             </li>
                           ))}
                         </ul>
@@ -490,7 +490,7 @@ export default function AdminPage() {
                           value={analysis.salesperson_lines}
                           onChange={(e) => setAnalysis({ ...analysis, salesperson_lines: e.target.value })}
                           rows={8}
-                          className="w-full bg-zinc-800 text-zinc-200 rounded-lg px-3 py-2 text-sm border border-orange-500/30 outline-none focus:border-orange-500 transition-colors resize-none font-mono"
+                          className="w-full bg-zinc-800 text-zinc-200 rounded-lg px-3 py-2 text-sm border border-purple-600/30 outline-none focus:border-purple-600 transition-colors resize-none font-mono"
                         />
                       </div>
                     )}
@@ -499,7 +499,7 @@ export default function AdminPage() {
                     <div className="flex gap-1 bg-zinc-900 p-1 rounded-xl">
                       {(['salesperson', 'full'] as const).map((m) => (
                         <button key={m} onClick={() => setUploadMode(m)}
-                          className={`flex-1 py-2 rounded-lg text-xs font-medium transition-colors ${uploadMode === m ? 'bg-orange-500 text-white' : 'text-zinc-400 hover:text-white'}`}>
+                          className={`flex-1 py-2 rounded-lg text-xs font-medium transition-colors ${uploadMode === m ? 'bg-purple-600 text-white' : 'text-zinc-400 hover:text-white'}`}>
                           {m === 'salesperson' ? 'Store my lines only (recommended)' : 'Store full transcript'}
                         </button>
                       ))}
@@ -509,7 +509,7 @@ export default function AdminPage() {
 
                 <div className="flex items-center gap-2">
                   <input id="upload-approve" type="checkbox" checked={uploadApprove}
-                    onChange={(e) => setUploadApprove(e.target.checked)} className="accent-orange-500" />
+                    onChange={(e) => setUploadApprove(e.target.checked)} className="accent-purple-600" />
                   <label htmlFor="upload-approve" className="text-zinc-400 text-sm">
                     This sounds like me — approve immediately
                     {!uploadApprove && <span className="text-zinc-600"> (goes to Review queue)</span>}
@@ -519,7 +519,7 @@ export default function AdminPage() {
                 <button
                   onClick={ingestTranscript}
                   disabled={uploading}
-                  className="w-full bg-orange-500 hover:bg-orange-400 disabled:opacity-40 disabled:cursor-not-allowed text-white py-3 rounded-xl text-sm font-medium transition-colors"
+                  className="w-full bg-purple-600 hover:bg-purple-500 disabled:opacity-40 disabled:cursor-not-allowed text-white py-3 rounded-xl text-sm font-medium transition-colors"
                 >
                   {uploading ? 'Adding to knowledge base...' : 'Add to Knowledge Base'}
                 </button>

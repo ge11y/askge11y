@@ -36,9 +36,7 @@ export default function Home() {
       <div className="min-h-screen bg-zinc-950 flex items-center justify-center p-4">
         <div className="w-full max-w-sm">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 rounded-full bg-orange-500 flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
-              G
-            </div>
+            <img src="/grape-skull.jpg" alt="G" className="w-16 h-16 rounded-full mx-auto mb-4 object-cover" />
             <h1 className="text-2xl font-bold text-white">Ask Gelly</h1>
             <p className="text-zinc-400 text-sm mt-1">Your personal pest control sales coach</p>
           </div>
@@ -48,12 +46,12 @@ export default function Home() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Team password"
-              className="w-full bg-zinc-800 text-white rounded-xl px-4 py-3 text-sm outline-none border border-zinc-700 focus:border-orange-500 transition-colors placeholder:text-zinc-500"
+              className="w-full bg-zinc-800 text-white rounded-xl px-4 py-3 text-sm outline-none border border-zinc-700 focus:border-purple-500 transition-colors placeholder:text-zinc-500"
             />
             {error && <p className="text-red-400 text-xs">{error}</p>}
             <button
               type="submit"
-              className="w-full bg-orange-500 hover:bg-orange-400 text-white py-3 rounded-xl text-sm font-medium transition-colors"
+              className="w-full bg-purple-600 hover:bg-purple-500 text-white py-3 rounded-xl text-sm font-medium transition-colors"
             >
               Enter
             </button>
@@ -66,9 +64,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-zinc-950 flex flex-col">
       <div className="flex items-center gap-3 px-4 py-4 border-b border-zinc-800">
-        <div className="w-9 h-9 rounded-full bg-orange-500 flex items-center justify-center text-white text-sm font-bold">
-          G
-        </div>
+        <img src="/grape-skull.jpg" alt="G" className="w-9 h-9 rounded-full object-cover" />
         <div>
           <div className="text-white font-semibold text-sm">Ask Gelly</div>
           <div className="text-zinc-500 text-xs">Pest Control Sales Coach</div>

@@ -67,7 +67,7 @@ export default function Chat() {
             onClick={() => setCategory(c)}
             className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
               category === c
-                ? 'bg-orange-500 text-white'
+                ? 'bg-purple-600 text-white'
                 : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-white'
             }`}
           >
@@ -102,14 +102,14 @@ export default function Chat() {
         {messages.map((msg, i) => (
           <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             {msg.role === 'assistant' && (
-              <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center text-white text-xs font-bold mr-3 mt-1 shrink-0">
+              <div className="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-white text-xs font-bold mr-3 mt-1 shrink-0">
                 G
               </div>
             )}
             <div
               className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap ${
                 msg.role === 'user'
-                  ? 'bg-orange-500 text-white rounded-tr-sm'
+                  ? 'bg-purple-600 text-white rounded-tr-sm'
                   : 'bg-zinc-800 text-zinc-100 rounded-tl-sm'
               }`}
             >
@@ -120,7 +120,7 @@ export default function Chat() {
 
         {loading && (
           <div className="flex justify-start">
-            <div className="w-8 h-8 rounded-full bg-orange-500 flex items-center justify-center text-white text-xs font-bold mr-3 mt-1 shrink-0">
+            <div className="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-white text-xs font-bold mr-3 mt-1 shrink-0">
               G
             </div>
             <div className="bg-zinc-800 rounded-2xl rounded-tl-sm px-4 py-3">
@@ -146,12 +146,12 @@ export default function Chat() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask Gelly anything..."
-            className="flex-1 bg-zinc-800 text-white rounded-xl px-4 py-3 text-sm outline-none border border-zinc-700 focus:border-orange-500 transition-colors placeholder:text-zinc-500"
+            className="flex-1 bg-zinc-800 text-white rounded-xl px-4 py-3 text-sm outline-none border border-zinc-700 focus:border-purple-600 transition-colors placeholder:text-zinc-500"
           />
           <button
             type="submit"
             disabled={!input.trim() || loading}
-            className="bg-orange-500 hover:bg-orange-400 disabled:opacity-40 disabled:cursor-not-allowed text-white px-5 py-3 rounded-xl text-sm font-medium transition-colors"
+            className="bg-purple-600 hover:bg-purple-500 disabled:opacity-40 disabled:cursor-not-allowed text-white px-5 py-3 rounded-xl text-sm font-medium transition-colors"
           >
             Send
           </button>
