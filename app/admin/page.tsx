@@ -301,7 +301,7 @@ export default function AdminPage() {
                 <label className="text-zinc-400 text-xs mb-1 block">Category</label>
                 <select value={category} onChange={(e) => setCategory(e.target.value)}
                   className="w-full bg-zinc-800 text-white rounded-lg px-3 py-2 text-sm border border-zinc-700 outline-none">
-                  {CATEGORIES.map((c) => <option key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(c)}</option>)}
+                  {CATEGORIES.map((c) => <option key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</option>)}
                 </select>
               </div>
             </div>
