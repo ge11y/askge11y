@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { embedText } from '@/lib/gemini'
 import { getServiceClient } from '@/lib/supabase'
 import { GELLY_SYSTEM_PROMPT } from '@/lib/gelly-prompt'
