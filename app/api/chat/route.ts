@@ -76,6 +76,12 @@ export async function POST(req: NextRequest) {
     .replace('{WRITTEN_CONTEXT}', writtenContext || 'No notes or scripts found for this topic yet.')
     .replace('{MANUAL_CONTEXT}',  manualContext  || 'No manual material found for this topic.')
 
-  const response = await chat(systemPrompt, history ?? [], message)
-  return NextResponse.json({ response })
+  try {
+    const response = await chat(systemPrompt, history ?? [], message)
+    return NextResponse.json({ response })
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err)
+    console.error('Chat error:', msg)
+    return NextResponse.json({ error: msg }, { status: 500 })
+  }
 }
