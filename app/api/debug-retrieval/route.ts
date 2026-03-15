@@ -23,21 +23,24 @@ export async function POST(req: NextRequest) {
   const [voiceResult, writtenResult, manualResult] = await Promise.allSettled([
     supabase.rpc('match_chunks_by_source', {
       query_embedding: embedding,
-      match_count: 5,
+      match_count: 10,
       filter_category: category ?? null,
       allowed_sources: VOICE_SOURCES,
+      min_similarity: 0.0,
     }),
     supabase.rpc('match_chunks_by_source', {
       query_embedding: embedding,
-      match_count: 4,
+      match_count: 10,
       filter_category: category ?? null,
       allowed_sources: WRITTEN_SOURCES,
+      min_similarity: 0.0,
     }),
     supabase.rpc('match_chunks_by_source', {
       query_embedding: embedding,
-      match_count: 3,
+      match_count: 10,
       filter_category: category ?? null,
       allowed_sources: MANUAL_SOURCES,
+      min_similarity: 0.0,
     }),
   ])
 
