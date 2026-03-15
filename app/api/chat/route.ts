@@ -1,8 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest } from 'next/server'
 import { embedText } from '@/lib/gemini'
-import { chat } from '@/lib/groq'
 import { getServiceClient } from '@/lib/supabase'
 import { GELLY_SYSTEM_PROMPT } from '@/lib/gelly-prompt'
+import Groq from 'groq-sdk'
+
+export const maxDuration = 60
 
 // Tier 1: Gelly's actual spoken words — highest priority
 const VOICE_SOURCES = ['recording']
@@ -76,6 +78,36 @@ export async function POST(req: NextRequest) {
     .replace('{WRITTEN_CONTEXT}', writtenContext || 'No notes or scripts found for this topic yet.')
     .replace('{MANUAL_CONTEXT}',  manualContext  || 'No manual material found for this topic.')
 
-  const response = await chat(systemPrompt, history ?? [], message)
-  return NextResponse.json({ response })
+  const groq = new Groq({ apiKey: process.env.GROQ_API_KEY })
+  const messages: Groq.Chat.ChatCompletionMessageParam[] = [
+    { role: 'system', content: systemPrompt },
+    ...(history ?? []).map((m: { role: string; text: string }) => ({
+      role: (m.role === 'assistant' ? 'assistant' : 'user') as 'user' | 'assistant',
+      content: m.text,
+    })),
+    { role: 'user', content: message },
+  ]
+
+  const stream = await groq.chat.completions.create({
+    model: 'llama-3.3-70b-versatile',
+    messages,
+    temperature: 0.7,
+    max_tokens: 512,
+    stream: true,
+  })
+
+  const encoder = new TextEncoder()
+  const readable = new ReadableStream({
+    async start(controller) {
+      for await (const chunk of stream) {
+        const text = chunk.choices[0]?.delta?.content ?? ''
+        if (text) controller.enqueue(encoder.encode(text))
+      }
+      controller.close()
+    },
+  })
+
+  return new Response(readable, {
+    headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+  })
 }
