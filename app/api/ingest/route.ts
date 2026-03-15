@@ -7,17 +7,33 @@ function isAdmin(req: NextRequest) {
   return auth === `Bearer ${process.env.ADMIN_PASSWORD}`
 }
 
-// Chunk text into segments of ~400 words with 50-word overlap
-function chunkText(text: string, chunkSize = 400, overlap = 50): string[] {
-  const words = text.split(/\s+/).filter(Boolean)
+// Chunk text by paragraphs first, then split oversized paragraphs by sentence
+function chunkText(text: string, maxWords = 300): string[] {
+  const paragraphs = text.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean)
   const chunks: string[] = []
-  let i = 0
-  while (i < words.length) {
-    const chunk = words.slice(i, i + chunkSize).join(' ')
-    if (chunk.trim()) chunks.push(chunk.trim())
-    i += chunkSize - overlap
+
+  for (const para of paragraphs) {
+    const wordCount = para.split(/\s+/).length
+    if (wordCount <= maxWords) {
+      chunks.push(para)
+    } else {
+      // Split oversized paragraph into sentences, then group into chunks
+      const sentences = para.match(/[^.!?]+[.!?]+/g) ?? [para]
+      let current = ''
+      for (const sentence of sentences) {
+        const combined = current ? current + ' ' + sentence.trim() : sentence.trim()
+        if (combined.split(/\s+/).length > maxWords && current) {
+          chunks.push(current.trim())
+          current = sentence.trim()
+        } else {
+          current = combined
+        }
+      }
+      if (current.trim()) chunks.push(current.trim())
+    }
   }
-  return chunks
+
+  return chunks.filter(c => c.split(/\s+/).length >= 10) // drop tiny fragments
 }
 
 export async function POST(req: NextRequest) {
