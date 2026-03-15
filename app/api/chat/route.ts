@@ -67,16 +67,24 @@ export async function POST(req: NextRequest) {
           manualContext  = chunks.filter((c: any) => MANUAL_SOURCES.includes(c.source_type ?? '')).map((c: any) => c.content).join('\n\n---\n\n')
         }
       }
-    } catch {
-      // KB retrieval failed — answer from persona only
+    } catch (kbErr) {
+      console.error('[chat] KB retrieval error:', kbErr instanceof Error ? kbErr.message : String(kbErr))
     }
+
+    console.log('[chat] contexts — voice:', voiceContext.length, 'written:', writtenContext.length, 'manual:', manualContext.length)
 
     const systemPrompt = GELLY_SYSTEM_PROMPT
       .replace('{VOICE_CONTEXT}',   voiceContext   || 'No recordings found for this topic yet.')
       .replace('{WRITTEN_CONTEXT}', writtenContext || 'No notes or scripts found for this topic yet.')
       .replace('{MANUAL_CONTEXT}',  manualContext  || 'No manual material found for this topic.')
 
-    const response = await chat(systemPrompt, history ?? [], message)
+    // If we have written notes, reinforce them directly in the user turn so the model can't miss them
+    const hasContext = voiceContext || writtenContext || manualContext
+    const augmentedMessage = hasContext
+      ? `[RELEVANT NOTES FROM YOUR KNOWLEDGE BASE:\n${[voiceContext, writtenContext, manualContext].filter(Boolean).join('\n\n')}\n]\n\nQuestion: ${message}`
+      : message
+
+    const response = await chat(systemPrompt, history ?? [], augmentedMessage)
     return NextResponse.json({ response })
 
   } catch (err) {
