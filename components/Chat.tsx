@@ -48,23 +48,11 @@ export default function Chat() {
           category: category || null,
         }),
       })
-      if (!res.ok || !res.body) throw new Error('Bad response')
-
-      const reader = res.body.getReader()
-      const decoder = new TextDecoder()
-      let full = ''
-
-      setMessages([...next, { role: 'assistant', text: '' }])
-      setLoading(false)
-
-      while (true) {
-        const { done, value } = await reader.read()
-        if (done) break
-        full += decoder.decode(value, { stream: true })
-        setMessages([...next, { role: 'assistant', text: full }])
-      }
+      const data = await res.json()
+      setMessages([...next, { role: 'assistant', text: data.response }])
     } catch {
       setMessages([...next, { role: 'assistant', text: "Something went wrong — try again." }])
+    } finally {
       setLoading(false)
     }
   }
