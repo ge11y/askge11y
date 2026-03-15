@@ -88,22 +88,27 @@ export async function POST(req: NextRequest) {
     { role: 'user', content: message },
   ]
 
-  const stream = await groq.chat.completions.create({
-    model: 'llama-3.3-70b-versatile',
-    messages,
-    temperature: 0.7,
-    max_tokens: 512,
-    stream: true,
-  })
-
   const encoder = new TextEncoder()
   const readable = new ReadableStream({
     async start(controller) {
-      for await (const chunk of stream) {
-        const text = chunk.choices[0]?.delta?.content ?? ''
-        if (text) controller.enqueue(encoder.encode(text))
+      try {
+        const stream = await groq.chat.completions.create({
+          model: 'llama-3.3-70b-versatile',
+          messages,
+          temperature: 0.7,
+          max_tokens: 512,
+          stream: true,
+        })
+        for await (const chunk of stream) {
+          const text = chunk.choices[0]?.delta?.content ?? ''
+          if (text) controller.enqueue(encoder.encode(text))
+        }
+      } catch (e) {
+        const msg = e instanceof Error ? e.message : 'Error'
+        controller.enqueue(encoder.encode(msg))
+      } finally {
+        controller.close()
       }
-      controller.close()
     },
   })
 
