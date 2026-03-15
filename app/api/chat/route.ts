@@ -30,18 +30,21 @@ export async function POST(req: NextRequest) {
           match_count: 5,
           filter_category: category ?? null,
           allowed_sources: VOICE_SOURCES,
+          min_similarity: 0.3,
         }),
         supabase.rpc('match_chunks_by_source', {
           query_embedding: embedding,
           match_count: 4,
           filter_category: category ?? null,
           allowed_sources: WRITTEN_SOURCES,
+          min_similarity: 0.3,
         }),
         supabase.rpc('match_chunks_by_source', {
           query_embedding: embedding,
           match_count: 3,
           filter_category: category ?? null,
           allowed_sources: MANUAL_SOURCES,
+          min_similarity: 0.3,
         }),
       ])
 
